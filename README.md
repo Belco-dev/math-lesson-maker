@@ -1,9 +1,9 @@
-# mwalimu-math-gen
+# math-lesson-maker
 **Rwanda Competency-Based Curriculum (CBC) Primary Mathematics Lesson Plan Generator (P1–P6)**
 
 An AI-powered web tool that helps Rwandan Primary School Mathematics teachers generate official REB CBC lesson plans instantly without backend server dependencies.
 
-## ✨ Key Features
+##  Key Features
 
 1. **Year-locked curriculum lookup (P1–P6):**
    - The AI reads **only the selected year's Teacher's Guide (TG) and Pupil's Book (PB)**. It never borrows a unit or lesson from another class's book.
@@ -33,7 +33,7 @@ An AI-powered web tool that helps Rwandan Primary School Mathematics teachers ge
    - Generates official Basic Education Board (REB) A4 PDF lesson plans locally in the browser using `html2pdf.js`.
    - Supports clean paper printing via print-optimized CSS rules (`@media print`).
 
-## 🚀 Usage / Deployment
+##  Usage / Deployment
 - Open `myindex.html` (or `index.html`) in any modern browser, or serve via any static HTTP server (e.g. `python3 -m http.server 8080`).
 - Select your Class / Year (`P1`–`P6`) — this locks the AI to that year's Teacher's Guide and Pupil's Book.
 - Type the **Unit title** as it appears in that year's books, then the **Lesson title** inside that unit.
