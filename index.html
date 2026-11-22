@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Math Lesson Plan Generator (Rwanda CBC P1–P6)</title>
-  <link rel="stylesheet" href="mystyles.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -34,7 +32,7 @@
             <strong>REB Curriculum Status:</strong>
             <span id="rebStatusText">Select the Class / Year (P1–P6). The AI will then read ONLY that year's Teacher's Guide (TG) and Pupil's Book (PB).</span>
             <div class="reb-link-row">
-              <a href="https://elearning.reb.rw/course/index.php?categoryid=19" target="_blank" class="reb-sublink">
+              <a href="https://elearning.reb.rw/course/index.php?categoryid=19" target="_blank" rel="noopener noreferrer" class="reb-sublink">
                 🔗 View P1–P6 Books on elearning.reb.rw (Category 19)
               </a>
             </div>
@@ -43,12 +41,14 @@
         <div class="ai-controls-row">
           <label class="ai-label">
             Unit title (type it as written in this year's TG / PB)
-            <input type="text" id="unitTitleSearch" class="ai-input" placeholder="e.g., Whole Numbers up to 1,000" autocomplete="off" />
+            <input type="text" id="unitTitleSearch" class="ai-input" placeholder="e.g., Whole Numbers up to 1,000" autocomplete="off" list="unitDatalist" />
           </label>
           <label class="ai-label">
             Lesson title (inside that unit)
-            <input type="text" id="lessonTitleSearch" class="ai-input" placeholder="e.g., Addition of 3-Digit Numbers with Carrying" autocomplete="off" />
+            <input type="text" id="lessonTitleSearch" class="ai-input" placeholder="e.g., Addition of 3-Digit Numbers with Carrying" autocomplete="off" list="lessonDatalist" />
           </label>
+          <datalist id="unitDatalist"></datalist>
+          <datalist id="lessonDatalist"></datalist>
         </div>
         <div id="lookupResult" class="lookup-result hidden" role="status" aria-live="polite"></div>
         <details id="yearUnitIndex" class="year-unit-index">
@@ -70,17 +70,17 @@
               <select id="aiProviderSelect">
                 <option value="builtin">🧠 Built-in REB CBC AI Engine (Free — Smart Client-Side AI)</option>
                 <option value="openai">🌐 OpenAI API (ChatGPT / GPT-4o)</option>
-                <option value="gemini">🌐 Google Gemini API (Gemini 1.5 Flash / Pro)</option>
-                <option value="claude">🌐 Anthropic Claude API (Claude 3.5 Sonnet)</option>
+                <option value="gemini">🌐 Google Gemini API (Gemini 2.0 Flash / Pro)</option>
+                <option value="claude">🌐 Anthropic Claude API (Claude Sonnet 4.5)</option>
                 <option value="custom">🌐 OpenRouter / Custom OpenAI-Compatible API</option>
               </select>
             </label>
             <label>AI Model Name
-              <input type="text" id="aiModelInput" placeholder="e.g., gpt-4o, gemini-1.5-flash, claude-3-5-sonnet" />
+              <input type="text" id="aiModelInput" placeholder="e.g., gpt-4o-mini, gemini-2.0-flash, claude-sonnet-4-5" />
             </label>
           </div>
           <div class="row">
-            <label>API Key (Optional — Saved securely in LocalStorage)
+            <label>API Key (Optional — stored in this browser only; not encrypted)
               <input type="password" id="aiApiKeyInput" placeholder="Enter API Key (sk-... or AIza...)" autocomplete="off" />
             </label>
             <label>Custom Endpoint URL (Only for OpenRouter/Custom)
@@ -88,9 +88,16 @@
             </label>
           </div>
           <div class="row">
-            <button type="button" id="saveAiSettingsBtn" class="btn-secondary btn-sm">💾 Save AI Settings to LocalStorage</button>
+            <label class="remember-key-label">
+              <input type="checkbox" id="rememberApiKey" />
+              Remember API key on this device (otherwise kept for this session only)
+            </label>
+          </div>
+          <div class="row">
+            <button type="button" id="saveAiSettingsBtn" class="btn-secondary btn-sm">💾 Save AI Settings</button>
             <span id="aiSettingsStatus" class="small status-msg"></span>
           </div>
+          <p class="small">⚠️ Browser storage is not encrypted. Do not enter API keys on shared computers. Prefer session-only storage unless you are the sole user of this device.</p>
         </div>
       </div>
 
@@ -98,7 +105,7 @@
         <div class="form-section-header">
           <h3>1. Standard Administrative Metadata (Header Table)</h3>
           <div class="ls-header-controls">
-            <span id="lsStatusBadge" class="ls-badge" title="Auto-saves header metadata to LocalStorage">✓ Saved in LocalStorage</span>
+            <span id="lsStatusBadge" class="ls-badge" title="Auto-saves header metadata to LocalStorage">○ LocalStorage Empty</span>
             <button type="button" id="saveHeadersBtn" class="btn-secondary btn-sm">💾 Save Header Defaults</button>
             <button type="button" id="clearHeadersBtn" class="btn-danger btn-sm">🗑️ Clear Saved Headers</button>
           </div>
@@ -402,7 +409,7 @@
           <tr>
             <td id="p_term"></td>
             <td id="p_date"></td>
-            <td id="p_subject">Maths</td>
+            <td id="p_subject">Mathematics</td>
             <td id="p_class"></td>
             <td id="p_unitNo"></td>
             <td id="p_lessonNo"></td>
@@ -434,6 +441,10 @@
           <tr>
             <th>Plan for this Class (location: in / outside)</th>
             <td id="p_planLocation"></td>
+          </tr>
+          <tr>
+            <th>Cross-cutting Issue (Header)</th>
+            <td id="p_crossCutting"></td>
           </tr>
           <tr>
             <th>Learning Materials (for all learners)</th>
@@ -502,6 +513,7 @@
     </div>
   </div>
 
-  <script src="myscript.js"></script>
+  <script src="vendor/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

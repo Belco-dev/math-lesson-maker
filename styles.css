@@ -748,3 +748,51 @@ button {
   .lookup-result,
   .year-unit-index { display: none !important; }
 }
+
+/* Clickable unit / lesson picker */
+.unit-pick-btn,
+.lesson-pick-btn {
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  color: #1e40af;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.lesson-pick-btn {
+  color: #475569;
+  font-weight: 400;
+}
+.unit-pick-btn:hover,
+.lesson-pick-btn:hover {
+  color: #1e3a8a;
+  background: #eff6ff;
+  border-radius: 4px;
+}
+
+.custom-plan-btn {
+  margin-top: 10px;
+}
+
+.remember-key-label {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+.remember-key-label input[type="checkbox"] {
+  margin-top: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* Keep table rows together when html2canvas / print paginates */
+.reb-activity-table tr,
+.reb-header-grid tr,
+.reb-field-table tr {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
